@@ -18,31 +18,31 @@ If the user is admin we will fetch some datas from database and show them,
  If we want to approve a booking we will create a link which will link us with approve.php file,
   and if we want to decline we will create a link which will link us with decline.php file.
 */
-   if ($_SESSION['is_admin'] == 'true') {
+ 
 
-     $sql = "SELECT movies.movie_name, users.email,bookings.id, bookings.nr_tickets, bookings.date, bookings.time FROM movies
-     INNER JOIN bookings ON movies.id = bookings.movie_id
-     INNER JOIN users ON users.id = bookings.user_id";
-            
-
+if ($_SESSION['is_admin'] == 'true') {
+    $sql = "SELECT movies.movie_name, users.email, bookings.id, bookings.nr_tickets, bookings.date, bookings.time
+            FROM movies
+            INNER JOIN bookings ON movies.id = bookings.movie_id
+            INNER JOIN users ON users.id = bookings.user_id
+            WHERE bookings.is_approved IS NULL OR bookings.is_approved != 'true'";  // Exclude approved bookings and NULL values
     $selectBookings = $conn->prepare($sql);
     $selectBookings->execute();
-
     $bookings_data = $selectBookings->fetchAll();
-   }else {
-    
-      $sql = "SELECT movies.movie_name, users.email, bookings.nr_tickets, bookings.date, bookings.time
-            FROM movies INNER JOIN bookings ON movies.id = bookings.movie_id 
-            INNER JOIN users ON users.id = bookings.user_id WHERE bookings.user_id = :user_id";
-
+} else {
+   
+    $sql = "SELECT movies.movie_name, users.email, bookings.nr_tickets, bookings.date, bookings.time
+            FROM movies 
+            INNER JOIN bookings ON movies.id = bookings.movie_id 
+            INNER JOIN users ON users.id = bookings.user_id 
+            WHERE (bookings.is_approved IS NULL OR bookings.is_approved != 'true') 
+            AND bookings.user_id = :user_id";  
     $selectBookings = $conn->prepare($sql);
-    $selectBookings->bindParam(':user_id',$user_id);
+    $selectBookings->bindParam(':user_id', $user_id);
     $selectBookings->execute();
-
     $bookings_data = $selectBookings->fetchAll();
-
-   }
- ?>
+}
+?>
 
  <!DOCTYPE html>
  <html>

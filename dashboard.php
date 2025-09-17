@@ -144,6 +144,15 @@
 
     <?php if ($_SESSION['is_admin'] == 'true') { ?>
 
+      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+          <h2>Movies</h2>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMovieModal">
+            Add New Movie
+          </button>
+      </div>
+      
+      
+      
       <h2>Users</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
@@ -170,6 +179,8 @@
                   <!-- If we want to delete a user we need to link into deleteUsers.php -->
                 <td><a href="deleteUsers.php?id=<?= $user_data['id'];?>">Delete</a></td>
               </tr>
+
+                
               
            <?php  } ?>
             
@@ -181,12 +192,7 @@
       
     } ?>
     
-      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-        <h2>Movies</h2>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMovieModal">
-          Add New Movie
-        </button>
-      </div>
+    
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>

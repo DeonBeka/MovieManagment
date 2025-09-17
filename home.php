@@ -3,7 +3,7 @@
   We will include config.php for connection with database.
   We will fetch all datas from movies in database and show them.
   */
-	
+  session_start();
    include_once('config.php');
 
    $sql = "SELECT * FROM movies";
@@ -97,7 +97,12 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a href="details.php?id=<?php echo $movie_data['id']; ?>"  class="btn btn-sm btn-outline-secondary" >View</a>
+                  <?php if ($_SESSION['is_admin'] == 'true') { ?>
                   <a href="edit.php?id=<?php echo $movie_data['id']; ?>"  class="btn btn-sm btn-outline-secondary">Edit</a>
+                  <?php }else {?>
+
+                   <?php
+                  } ?>
                 </div>
                 <small class="text-muted">Rating: <?php echo $movie_data['movie_rating']; ?></small>
                 <small class="text-muted"><?php echo $movie_data['movie_quality']; ?></small>
